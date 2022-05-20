@@ -1,0 +1,27 @@
+const db = require('../model');
+const { QueryTypes } = require('sequelize');
+
+// GESTION DES ANNONCES JOBS
+
+// CREATE Public - Méthode POST de jobCtrl.publishJob
+exports.publishJob = (req, res, next) => {
+    console.log(req.body)
+        db.jobs.create({
+        job_title: req.body.job_title,
+        company_name: req.body.company_name,
+        description: req.body.description,
+        salary: req.body.salary
+    })
+        .then (() => {
+            res.status(201).json({ message: 'Job enregistré !'})
+        })
+        .catch(error => res.status(400).json({ error }));
+};
+
+
+// READ Public - Méthode GET de jobCtrl.loadJobs
+exports.loadJobs = (req, res, next) => {
+    db.sequelize.query("SELECT `jobs`.`id`, `jobs`.`job_title`, `jobs`.`company_name`, `jobs`.`salary`, `jobs`.`description`,  `jobs`.`updatedAt` FROM `jobs`", { type: QueryTypes.SELECT })
+        .then((job) => res.status(200).json( job ))
+        .catch(() => res.status(404).json({ error: "Echec de récupération de la liste" }));
+};

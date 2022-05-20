@@ -1,0 +1,9 @@
+{
+    "development": {
+      "username": "aloeuser",
+      "password": "aloeuser",
+      "database": "aloedb",
+      "host": "localhost",
+      "dialect": "mysql"
+    }
+  }
